@@ -12,14 +12,11 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        backend: [vulkan, opengl]
+        backend: [vulkan]
         include:
           - backend: vulkan
             artifact_name: zed-release
-            rustflags: "-C symbol-mangling-version=v0 --cfg vulkan"
-          - backend: opengl
-            artifact_name: zed-release-opengl
-            rustflags: "-C symbol-mangling-version=v0 --cfg gles"
+            rustflags: "--cfg windows_slim_errors -C target-feature=+crt-static"
 
     steps:
       - name: Enable long paths in Git
@@ -79,11 +76,9 @@ jobs:
 
       - name: Create release directories and zip
         run: |
-          mkdir -p zed-release zed-release-opengl
+          mkdir -p zed-release
           mv artifacts/zed-release/zed.exe zed-release/
-          mv artifacts/zed-release-opengl/zed.exe zed-release-opengl/
           zip -r zed-windows.zip zed-release/*
-          zip -r zed-windows-opengl.zip zed-release-opengl/*
 
       - name: Upload release build artifacts to GitHub Release
         uses: softprops/action-gh-release@v2
@@ -94,4 +89,3 @@ jobs:
           make_latest: true
           files: |
             zed-windows.zip
-            zed-windows-opengl.zip
