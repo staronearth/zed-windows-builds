@@ -16,10 +16,10 @@ jobs:
         include:
           - backend: vulkan
             artifact_name: zed-release
-            rustflags: ""
+            rustflags: "-C symbol-mangling-version=v0 --cfg vulkan"
           - backend: opengl
             artifact_name: zed-release-opengl
-            rustflags: "-C symbol-mangling-version=v0 --cfg tokio_unstable"
+            rustflags: "-C symbol-mangling-version=v0 --cfg gles"
 
     steps:
       - name: Enable long paths in Git
