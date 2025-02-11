@@ -32,8 +32,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          repository: zed-industries/zed
-          ref: main
+          repository: RemcoSmitsDev/zed
+          ref: debugger
 
       - name: Install rust nightly
         uses: dtolnay/rust-toolchain@stable
